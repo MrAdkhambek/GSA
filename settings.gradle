@@ -1,0 +1,4 @@
+rootProject.name = "GSA"
+include ':app'
+include ':gsa-annotation'
+include ':gsa-processor'
