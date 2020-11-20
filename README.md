@@ -4,7 +4,7 @@ My first kapt project
 
 Plan:
 - [ ] - Check argument Serializable or Parcelable 
-- [ ] - Generate one class all for Fragment all arguments
+- [ ] - Generate one class for Fragment all arguments
 
 
 ![Image](media/1.png)
