@@ -23,6 +23,7 @@ My first kapt project
 Plan:
 - [ ] - Check argument Serializable or Parcelable 
 - [ ] - Check default argument Serializable or Parcelable 
+- [ ] - Check fragment have empty constructor
 - [ ] - Generate one class for Fragment all arguments
 - [ ] - Group navigator
 
