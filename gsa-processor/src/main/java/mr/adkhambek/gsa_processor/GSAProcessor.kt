@@ -39,12 +39,12 @@ class GSAProcessor : AbstractProcessor() {
         elementUtils = processingEnv.elementUtils
     }
 
-    fun note(message: Any?) {
+    private fun note(message: Any?) {
         message ?: return
         logger.printMessage(Diagnostic.Kind.NOTE, message.toString())
     }
 
-    fun error(message: Any?, element: Element) {
+    private fun error(message: Any?, element: Element) {
         message ?: return
         logger.printMessage(Diagnostic.Kind.ERROR, message.toString(), element)
     }
@@ -53,8 +53,7 @@ class GSAProcessor : AbstractProcessor() {
         annotations: MutableSet<out TypeElement>?,
         roundEnv: RoundEnvironment
     ): Boolean {
-        val kaptKotlinGeneratedDir =
-            processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return true
+        val kaptKotlinGeneratedDir: String = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return true
 
         roundEnv
             .getElementsAnnotatedWith(Args::class.java)
@@ -65,17 +64,11 @@ class GSAProcessor : AbstractProcessor() {
                     return false
                 }
 
-                val modelData = getModelData(it)
-                val fragmentName = modelData.fragmentName
+                val argumentsModel = getArgumentModel(it)
+                val fragmentName = argumentsModel.fragmentName
 
-                FileSpec.builder(modelData.packageName, "${fragmentName}Nav")
-                    .addType(
-                        ArgCodeBuilder(
-                            modelData.packageName,
-                            fragmentName,
-                            modelData.arguments
-                        ).build()
-                    )
+                FileSpec.builder(argumentsModel.packageName, "${fragmentName}Nav")
+                    .addType(ArgCodeBuilder(argumentsModel).build())
                     .build()
                     .writeTo(File(kaptKotlinGeneratedDir))
             }
@@ -83,21 +76,25 @@ class GSAProcessor : AbstractProcessor() {
         return true
     }
 
-    private fun getModelData(element: Element): ArgumentsModel {
+    private fun getArgumentModel(element: Element): ArgumentsModel {
         val packageName: String = processingEnv.elementUtils.getPackageOf(element).toString()
         val modelName: String = element.simpleName.toString()
 
-        val annotation = element.getAnnotation(Args::class.java)
+        val args = element.getAnnotation(Args::class.java)
 
-        val args: List<ArgumentModel> = annotation.args.map {
-
-            val type = it.getTypeName()
-            if (!isAssignableSerializable(type)) {
-                val e = processingEnv.typeUtils.asElement(type)
-                error(MESSAGE_SERIALIZABLE, e)
+        /**
+         **     check all arguments isPrimitive or isSerializable or isParcelable
+         **/
+        args.args.forEach { arg ->
+            val argumentType = arg.getTypeName()
+            if (!isAssignableSerializable(argumentType)) {
+                val argumentElement = processingEnv.typeUtils.asElement(argumentType)
+                error(MESSAGE_SERIALIZABLE, argumentElement)
                 throw Exception()
             }
+        }
 
+        val arguments: List<ArgumentModel> = args.args.map {
             ArgumentModel(
                 it.name,
                 it.getTypeName().getTypeName(),
@@ -106,7 +103,7 @@ class GSAProcessor : AbstractProcessor() {
             )
         }
 
-        return ArgumentsModel(packageName, modelName, args)
+        return ArgumentsModel(packageName, modelName, arguments)
     }
 
 
@@ -117,8 +114,8 @@ class GSAProcessor : AbstractProcessor() {
     }
 
     private fun isAssignableSerializable(typeMirror: TypeMirror): Boolean {
-        val typeSerializable: TypeMirror = elementUtils.getTypeElement(PACKAGE_SERIALIZABLE).asType()
         val typeParcelable: TypeMirror = elementUtils.getTypeElement(PACKAGE_PARCELABLE).asType()
+        val typeSerializable: TypeMirror = elementUtils.getTypeElement(PACKAGE_SERIALIZABLE).asType()
         return typeMirror.kind.isPrimitive || typeUtils.isAssignable(typeMirror, typeSerializable) || typeUtils.isAssignable(typeMirror, typeParcelable)
     }
 

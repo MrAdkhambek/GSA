@@ -1,7 +1,7 @@
 package mr.adkhambek.gsa.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 

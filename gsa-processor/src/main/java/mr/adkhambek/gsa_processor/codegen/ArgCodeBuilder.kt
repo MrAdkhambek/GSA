@@ -8,13 +8,21 @@ import mr.adkhambek.gsa_processor.ktx.addArgumentWithDefault
 import mr.adkhambek.gsa_processor.ktx.camelToSnakeCase
 import mr.adkhambek.gsa_processor.ktx.snakeToLowerCamelCase
 import mr.adkhambek.gsa_processor.models.ArgumentModel
+import mr.adkhambek.gsa_processor.models.ArgumentsModel
 
 
 internal class ArgCodeBuilder(
-    private val packageName: String,
-    private val fragmentName: String,
-    private val arguments: List<ArgumentModel>
+    private val argumentsModel: ArgumentsModel
 ) {
+
+    private val fragmentName: String
+        get() = argumentsModel.fragmentName
+
+    private val packageName: String
+        get() = argumentsModel.packageName
+
+    private val arguments: List<ArgumentModel>
+        get() = argumentsModel.arguments
 
     fun build(): TypeSpec = TypeSpec.objectBuilder("${fragmentName}Nav")
         .apply {
