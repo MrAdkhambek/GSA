@@ -29,6 +29,7 @@ internal class ArgCodeBuilder(
         .apply {
             addFactoryMethod()
             addArgsMethod()
+            addArgClassMethod()
         }.build()
 
     private fun TypeSpec.Builder.addFactoryMethod(): TypeSpec.Builder = apply {
@@ -57,7 +58,7 @@ internal class ArgCodeBuilder(
         func.addStatement("val args = androidx.core.os.bundleOf(")
         arguments.forEach {
             func.addStatement(
-                "\t\"%L\" to %L,",
+                "\"%L\" to %L,",
                 it.name.camelToSnakeCase(),
                 it.name.snakeToLowerCamelCase()
             )
@@ -69,7 +70,6 @@ internal class ArgCodeBuilder(
     }
 
     private fun TypeSpec.Builder.addArgsMethod(): TypeSpec.Builder = apply {
-
         arguments.forEach {
             val func: FunSpec.Builder = FunSpec
                 .builder("${it.name.snakeToLowerCamelCase()}Arg")
@@ -88,7 +88,35 @@ internal class ArgCodeBuilder(
                 it.name.camelToSnakeCase(),
                 it.typeName
             )
+
             addFunction(func.build())
         }
+    }
+
+    private fun TypeSpec.Builder.addArgClassMethod(): TypeSpec.Builder = apply {
+        val clazz = ClassName(packageName, "${fragmentName}Args")
+        val funcName = fragmentName.camelToSnakeCase().snakeToLowerCamelCase()
+
+        val func: FunSpec.Builder = FunSpec
+            .builder("${funcName}Args")
+            .addAnnotation(ArgsDSL::class)
+            .addAnnotation(JvmStatic::class)
+            .addModifiers(KModifier.PUBLIC)
+            .addParameter("arg", ClassName("android.os", "Bundle"))
+            .returns(clazz)
+
+        func.addStatement("val args =  ${fragmentName}Args(")
+        arguments.forEach {
+            func.addStatement(
+                "%L = arg.get(\"%L\") as %L,",
+                it.name.snakeToLowerCamelCase(),
+                it.name.camelToSnakeCase(),
+                it.typeName
+            )
+        }
+        func.addStatement(")")
+        func.addStatement("return args")
+
+        addFunction(func.build())
     }
 }

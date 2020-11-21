@@ -18,7 +18,7 @@ const val age = 45
         Arg("user_id", Long::class, "1", isNullable = true),
         Arg("user_age", Int::class, "22", isNullable = true),
         Arg("user_name", String::class, "Adam"),
-        Arg("some_parcelable", SomeParcelable::class,"SomeParcelable($age)"),
+        Arg("some_parcelable", SomeParcelable::class, "SomeParcelable($age)"),
         Arg("some_serializable", SomeSerializable::class)
     ]
 )
@@ -36,5 +36,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
         Log.d("MainFragmentArgs", MainFragmentNav.someParcelableArg(requireArguments()).toString())
         Log.d("MainFragmentArgs", MainFragmentNav.someSerializableArg(requireArguments()).toString())
+
+        Log.d("MainFragmentArgs", MainFragmentNav.mainFragmentArgs(requireArguments()).toString())
     }
 }

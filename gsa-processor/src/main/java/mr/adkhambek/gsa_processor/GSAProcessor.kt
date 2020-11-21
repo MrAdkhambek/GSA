@@ -1,11 +1,11 @@
 package mr.adkhambek.gsa_processor
 
 
-import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeName
 import mr.adkhambek.gsa_annotation.Arg
 import mr.adkhambek.gsa_annotation.Args
-import mr.adkhambek.gsa_processor.codegen.ArgCodeBuilder
+import mr.adkhambek.gsa_processor.codegen.ArgClassBuilder
+import mr.adkhambek.gsa_processor.codegen.NavClassBuilder
 import mr.adkhambek.gsa_processor.ktx.KAPT_KOTLIN_GENERATED_OPTION_NAME
 import mr.adkhambek.gsa_processor.ktx.getTypeName
 import mr.adkhambek.gsa_processor.models.ArgumentModel
@@ -66,13 +66,17 @@ class GSAProcessor : AbstractProcessor() {
                 }
 
                 val argumentsModel = getArgumentModel(it)
-                val fragmentName = argumentsModel.fragmentName
 
-                FileSpec.builder(argumentsModel.packageName, "${fragmentName}Nav")
-                    .addType(ArgCodeBuilder(argumentsModel).build())
+                NavClassBuilder(argumentsModel)
+                    .build()
+                    .writeTo(File(kaptKotlinGeneratedDir))
+
+                ArgClassBuilder(argumentsModel)
                     .build()
                     .writeTo(File(kaptKotlinGeneratedDir))
             }
+
+
 
         return true
     }
