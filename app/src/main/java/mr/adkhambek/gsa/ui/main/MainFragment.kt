@@ -14,9 +14,9 @@ import mr.adkhambek.gsa_annotation.Args
 
 @Args(
     args = [
-//        Arg("user_id", Long::class),
-//        Arg("user_age", Int::class, "22"),
-//        Arg("user_name", String::class, "Adam"),
+        Arg("user_id", Long::class),
+        Arg("user_age", Int::class, "22"),
+        Arg("user_name", String::class, "Adam"),
         Arg("some_parcelable", SomeParcelable::class),
         Arg("some_serializable", SomeSerializable::class)
     ]

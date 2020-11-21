@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getMainFragment() = MainFragmentNav.onMainFragment(
-//        userId = 45L,
-//        userAge = 22,
-//        userName = "Peter",
+        userId = 45L,
+        userAge = 22,
+        userName = "Peter",
         someParcelable = SomeParcelable(12),
         someSerializable = SomeSerializable(36)
     )
