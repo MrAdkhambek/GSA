@@ -4,6 +4,7 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeSpec
+import mr.adkhambek.gsa_annotation.ArgsDSL
 import mr.adkhambek.gsa_processor.ktx.addArgumentWithDefault
 import mr.adkhambek.gsa_processor.ktx.camelToSnakeCase
 import mr.adkhambek.gsa_processor.ktx.snakeToLowerCamelCase
@@ -33,6 +34,8 @@ internal class ArgCodeBuilder(
     private fun TypeSpec.Builder.addFactoryMethod(): TypeSpec.Builder = apply {
         val func: FunSpec.Builder = FunSpec
             .builder("on$fragmentName".snakeToLowerCamelCase())
+            .addAnnotation(ArgsDSL::class)
+            .addAnnotation(JvmStatic::class)
             .addModifiers(KModifier.PUBLIC)
             .returns(ClassName(packageName, fragmentName))
 
@@ -70,6 +73,8 @@ internal class ArgCodeBuilder(
         arguments.forEach {
             val func: FunSpec.Builder = FunSpec
                 .builder("${it.name.snakeToLowerCamelCase()}Arg")
+                .addAnnotation(ArgsDSL::class)
+                .addAnnotation(JvmStatic::class)
                 .addModifiers(KModifier.PUBLIC)
                 .returns(it.typeName)
 
