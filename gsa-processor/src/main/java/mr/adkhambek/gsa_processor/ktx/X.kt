@@ -42,9 +42,9 @@ internal fun TypeMirror.getTypeName(): TypeName {
     }
 }
 
-internal fun Arg.getTypeName(): TypeName = try {
+internal fun Arg.getTypeName(): TypeMirror = try {
     type
     throw Exception("Expected to get a MirroredTypeException")
 } catch (e: MirroredTypeException) {
-    e.typeMirror.getTypeName()
+    e.typeMirror
 }

@@ -21,7 +21,8 @@ dependencies {
 My first kapt project
 
 Plan:
-- [ ] - Check argument Serializable or Parcelable 
+- [x] - Check argument Serializable or Parcelable
+- [x] - Check Args place Fragment
 - [ ] - Check default argument Serializable or Parcelable 
 - [ ] - Generate one class for Fragment all arguments
 - [ ] - Group navigator

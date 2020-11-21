@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -34,6 +35,11 @@ android {
     }
 }
 
+
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -46,6 +52,8 @@ dependencies {
 
     implementation project(path: ':gsa-annotation')
     kapt project(path: ':gsa-processor')
+//    implementation 'com.github.MrAdkhambek.GSA:gsa-annotation:0.0.1'
+//    kapt 'com.github.MrAdkhambek.GSA:gsa-processor:0.0.1'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
