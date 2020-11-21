@@ -29,9 +29,11 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-//        Log.d("MainFragmentArgs", MainFragmentNav.userIdArg(requireArguments()).toString())
-//        Log.d("MainFragmentArgs", MainFragmentNav.userAgeArg(requireArguments()).toString())
-//        Log.d("MainFragmentArgs", MainFragmentNav.userNameArg(requireArguments()))
+        Log.d("MainFragmentArgs", MainFragmentNav.userIdArg(requireArguments()).toString())
+        Log.d("MainFragmentArgs", MainFragmentNav.userAgeArg(requireArguments()).toString())
+        Log.d("MainFragmentArgs", MainFragmentNav.userNameArg(requireArguments()))
+
         Log.d("MainFragmentArgs", MainFragmentNav.someParcelableArg(requireArguments()).toString())
+        Log.d("MainFragmentArgs", MainFragmentNav.someSerializableArg(requireArguments()).toString())
     }
 }
