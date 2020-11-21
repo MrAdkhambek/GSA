@@ -24,7 +24,7 @@ Plan:
 - [x] - Check argument Serializable or Parcelable
 - [x] - Check Args place Fragment
 - [ ] - Check default argument Serializable or Parcelable 
-- [ ] - Generate one class for Fragment all arguments
+- [x] - Generate one class for Fragment all arguments
 - [ ] - Group navigator
 
 
