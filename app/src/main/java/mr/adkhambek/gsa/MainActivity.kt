@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMainFragment() = MainFragmentNav.onMainFragment(
+    private fun getMainFragment() = MainFragmentNav.mainFragment(
         userId = 45L,
         userAge = 22,
         userName = "Peter",

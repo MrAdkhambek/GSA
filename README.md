@@ -30,4 +30,3 @@ Plan:
 
 ![Image](media/1.png)
 ![Image](media/2.png)
-![Image](media/3.png)

@@ -33,8 +33,9 @@ internal class ArgCodeBuilder(
         }.build()
 
     private fun TypeSpec.Builder.addFactoryMethod(): TypeSpec.Builder = apply {
+        val funcName = fragmentName.camelToSnakeCase().snakeToLowerCamelCase()
         val func: FunSpec.Builder = FunSpec
-            .builder("on$fragmentName".snakeToLowerCamelCase())
+            .builder(funcName)
             .addAnnotation(ArgsDSL::class)
             .addAnnotation(JvmStatic::class)
             .addModifiers(KModifier.PUBLIC)
