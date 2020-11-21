@@ -19,8 +19,8 @@ internal fun addArgumentWithDefault(
     isNullable: Boolean,
     default: String
 ) = ParameterSpec
-    .builder(argName, typeName.copy(isNullable))
-    .defaultValue(if (typeName == String::class.asTypeName()) "%S" else "%L", default)
+    .builder(argName, typeName)
+    .defaultValue(if (typeName == String::class.asTypeName().copy(isNullable)) "%S" else "%L", default)
     .build()
 
 

@@ -2,6 +2,7 @@ package mr.adkhambek.gsa_processor
 
 
 import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.TypeName
 import mr.adkhambek.gsa_annotation.Arg
 import mr.adkhambek.gsa_annotation.Args
 import mr.adkhambek.gsa_processor.codegen.ArgCodeBuilder
@@ -95,11 +96,12 @@ class GSAProcessor : AbstractProcessor() {
         }
 
         val arguments: List<ArgumentModel> = args.args.map {
+            val typeName: TypeName = it.getTypeName().getTypeName().copy(it.isNullable)
             ArgumentModel(
-                it.name,
-                it.getTypeName().getTypeName(),
-                it.isNullable,
-                it.defaultValue
+                name = it.name,
+                typeName = typeName,
+                isNullable = it.isNullable,
+                defaultValue = it.defaultValue
             )
         }
 
