@@ -11,14 +11,12 @@ import mr.adkhambek.gsa.model.SomeSerializable
 import mr.adkhambek.gsa_annotation.Arg
 import mr.adkhambek.gsa_annotation.Args
 
-const val age = 45
-
 @Args(
     args = [
         Arg("user_id", Long::class, "1", isNullable = true),
         Arg("user_age", Int::class, "22", isNullable = true),
         Arg("user_name", String::class, "Adam"),
-        Arg("some_parcelable", SomeParcelable::class, "SomeParcelable($age)"),
+        Arg("some_parcelable", SomeParcelable::class, "SomeParcelable(12)"),
         Arg("some_serializable", SomeSerializable::class)
     ]
 )
