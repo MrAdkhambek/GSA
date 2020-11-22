@@ -20,7 +20,7 @@ dependencies {
 
 My first kapt project
 
-Plan:
+## Todos
 - [x] - Check argument Serializable or Parcelable
 - [x] - Check Args place Fragment
 - [ ] - Check default argument Serializable or Parcelable 
