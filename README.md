@@ -1,4 +1,4 @@
-## GSA - Generate Safe Ars
+## GSA - Generate Safe Args
 [![](https://jitpack.io/v/MrAdkhambek/GSA.svg)](https://jitpack.io/#MrAdkhambek/GSA)
 
 
@@ -23,7 +23,7 @@ My first kapt project
 ## Todos
 - [x] - Check argument Serializable or Parcelable
 - [x] - Check Args place Fragment
-- [ ] - Check default argument Serializable or Parcelable 
+- [x] - Check default argument Serializable or Parcelable 
 - [x] - Generate one class for Fragment all arguments
 - [ ] - Group navigator
 
